@@ -9,6 +9,7 @@ queries:
       - description
       - displayName
       - sAMAccountName
+      - objectSID
       - userPrincipalName
       - userAccountControl
       - homeDirectory
@@ -28,8 +29,8 @@ queries:
     references:
       - http://www.ldapexplorer.com/en/manual/109050000-famous-filters.htm
       - https://adsecurity.org/wp-content/uploads/2016/08/DEFCON24-2016-Metcalf-BeyondTheMCSE-RedTeamingActiveDirectory.pdf
-  - action: ENUM_ADCS_CAS
-    description: 'Enumerate ADCS certificate authorities.'
+  - action: ENUM_AD_CS_CAS
+    description: 'Enumerate AD Certificate Service certificate authorities.'
     base_dn_prefix: 'CN=Enrollment Services,CN=Public Key Services,CN=Services,CN=Configuration'
     filter: '(objectClass=pKIEnrollmentService)'
     attributes:
@@ -42,8 +43,8 @@ queries:
       - caCertificate
     references:
       - https://aaroneg.com/post/2018-05-15-enterprise-ca/
-  - action: ENUM_ADCS_CERT_TEMPLATES
-    description: 'Enumerate ADCS certificate templates.'
+  - action: ENUM_AD_CS_CERT_TEMPLATES
+    description: 'Enumerate AD Certificate Service certificate templates.'
     base_dn_prefix: 'CN=Certificate Templates,CN=Public Key Services,CN=Services,CN=Configuration'
     filter: '(objectClass=pkicertificatetemplate)'
     attributes:
@@ -92,12 +93,14 @@ queries:
     filter: '(|(objectCategory=computer)(objectClass=computer))'
     attributes:
       - dn
+      - name
+      - description
       - displayName
+      - sAMAccountName
+      - objectSID
       - distinguishedName
       - dNSHostName
-      - description
       - givenName
-      - name
       - operatingSystem
       - operatingSystemVersion
       - operatingSystemServicePack
@@ -132,7 +135,7 @@ queries:
       - https://www.netspi.com/blog/technical/network-penetration-testing/exploiting-adidns/
       - https://github.com/dirkjanm/krbrelayx/blob/master/dnstool.py
   - action: ENUM_DNS_ZONES
-    description: 'Dump info about DNS zones the server knows about using the dnsZone object class under the DC DomainDnsZones. This is needed as without this BASEDN prefix we often miss certain entries.'
+    description: 'Dump all known DNS zones using the dnsZone object class under the DC DomainDnsZones. Without A BASEDN prefix you can miss certain entries.'
     filter: '(objectClass=dnsZone)'
     base_dn_prefix: 'DC=DomainDnsZones'
     attributes:
@@ -140,6 +143,18 @@ queries:
       - distinguishedName
     references:
       - https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1
+  - action: ENUM_DOMAIN
+    description: 'Dump info about the Active Directory domain.'
+    filter: '(objectClass=domain)'
+    attributes:
+      - ms-DS-MachineAccountQuota
+      - objectSID
+      - name
+      - lockoutduration
+      - lockoutthreshold
+      - minpwdage
+      - maxpwdage
+      - minpwdlength
   - action: ENUM_DOMAIN_CONTROLLERS
     description: 'Dump all known domain controllers.'
     filter: '(&(objectCategory=Computer)(userAccountControl:1.2.840.113556.1.4.803:=8192))'
@@ -156,7 +171,7 @@ queries:
       - operatingSystemServicePack
     references:
       - http://www.ldapexplorer.com/en/manual/109050000-famous-filters.htm
-      - https://adsecurity.org/wp-content/uploads/2016/08/DEFCON24-2016-Metcalf-BeyondTheMCSE-RedTeamingActiveDirectory.pdf 
+      - https://adsecurity.org/wp-content/uploads/2016/08/DEFCON24-2016-Metcalf-BeyondTheMCSE-RedTeamingActiveDirectory.pdf
   - action: ENUM_EXCHANGE_RECIPIENTS
     description: 'Dump info about all known Exchange recipients.'
     filter: '(|(mailNickname=*)(proxyAddresses=FAX:*))'
@@ -209,6 +224,7 @@ queries:
       - adminCount
       - managedBy
       - groupAttributes
+      - objectSID
     references:
       - http://www.ldapexplorer.com/en/manual/109050000-famous-filters.htm
   - action: ENUM_GROUP_POLICY_OBJECTS
@@ -231,7 +247,7 @@ queries:
       - serverName
     references:
       - https://troopers.de/downloads/troopers19/TROOPERS19_AD_Fun_With_LDAP.pdf
-      - https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1 
+      - https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1
   - action: ENUM_LAPS_PASSWORDS
     description: 'Dump info about computers that have LAPS enabled, and passwords for them if available.'
     filter: '(ms-MCS-AdmPwd=*)'
@@ -253,6 +269,13 @@ queries:
       - dnsHostName
     references:
       - https://troopers.de/downloads/troopers19/TROOPERS19_AD_Fun_With_LDAP.pdf
+  - action: ENUM_MACHINE_ACCOUNT_QUOTA
+    description: 'Dump the number of computer accounts a user is allowed to create in a domain.'
+    filter: '(objectClass=domain)'
+    attributes:
+      - ms-DS-MachineAccountQuota
+    references:
+      - https://learn.microsoft.com/en-us/windows/win32/adschema/a-ms-ds-machineaccountquota
   - action: ENUM_ORGROLES
     description: 'Dump info about all known organization roles in the LDAP environment.'
     filter: '(objectClass=organizationalRole)'
@@ -270,7 +293,7 @@ queries:
     references:
       - http://www.ldapexplorer.com/en/manual/109050000-famous-filters.htm
   - action: ENUM_UNCONSTRAINED_DELEGATION
-    description: 'Dump info about all known objects that allow uncontrained delegation.'
+    description: 'Dump info about all known objects that allow unconstrained delegation.'
     filter: '(userAccountControl:1.2.840.113556.1.4.803:=524288)'
     attributes:
       - cn
@@ -303,7 +326,7 @@ queries:
     references:
       - https://learn.microsoft.com/en-us/troubleshoot/windows-server/identity/useraccountcontrol-manipulate-account-properties
   - action: ENUM_USER_ASREP_ROASTABLE
-    description: 'Dump info about all users who are configured not to require kerberos pre-authentication and are therefore AS-REP roastable.'
+    description: 'Dump all users who are configured not to require kerberos pre-authentication, i.e. AS-REP roastable.'
     filter: '(&(samAccountType=805306368)(userAccountControl:1.2.840.113556.1.4.803:=4194304))'
     attributes:
       - cn
@@ -349,4 +372,18 @@ queries:
     references:
       - https://malicious.link/post/2022/ldapsearch-reference/
       - https://burmat.gitbook.io/security/hacking/domain-exploitation
-      - https://learn.microsoft.com/en-us/troubleshoot/windows-server/identity/useraccountcontrol-manipulate-account-properties 
+      - https://learn.microsoft.com/en-us/troubleshoot/windows-server/identity/useraccountcontrol-manipulate-account-properties
+  - action: ENUM_PRE_WINDOWS_2000_COMPUTERS
+    description: 'Dump info about all computer objects likely created as a "pre-Windows 2000 computer", for which the password might be predictable.'
+    filter: '(&(userAccountControl=4128))'
+    attributes:
+      - cn
+      - displayName
+      - description
+      - sAMAccountName
+      - userPrincipalName
+      - logonCount
+      - userAccountControl
+    references:
+      - https://www.thehacker.recipes/ad/movement/builtins/pre-windows-2000-computers
+      - https://trustedsec.com/blog/diving-into-pre-created-computer-accounts

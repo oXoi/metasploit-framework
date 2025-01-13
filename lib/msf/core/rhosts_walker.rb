@@ -39,9 +39,15 @@ module Msf
     end
 
     class InvalidSchemaError < StandardError
+      MESSAGE = 'Invalid schema'
     end
 
     class InvalidCIDRError < StandardError
+      MESSAGE = 'Invalid CIDR'
+    end
+
+    class RhostResolveError < StandardError
+      MESSAGE = 'Host resolution failed'
     end
 
     def initialize(value = '', datastore = Msf::ModuleDataStore.new(nil))
@@ -135,22 +141,34 @@ module Msf
             schema = Regexp.last_match(:schema)
             raise InvalidSchemaError unless SUPPORTED_SCHEMAS.include?(schema)
 
+            found = false
             parse_method = "parse_#{schema}_uri"
             parsed_options = send(parse_method, value, datastore)
             Rex::Socket::RangeWalker.new(parsed_options['RHOSTS']).each_ip do |ip|
               results << datastore.merge(
                 parsed_options.merge('RHOSTS' => ip, 'UNPARSED_RHOSTS' => value)
               )
+              found = true
+            end
+            unless found
+              raise RhostResolveError.new(value)
             end
           else
+            found = false
             Rex::Socket::RangeWalker.new(value).each_host do |rhost|
               overrides = {}
               overrides['UNPARSED_RHOSTS'] = value
               overrides['RHOSTS'] = rhost[:address]
               set_hostname(datastore, overrides, rhost[:hostname])
               results << datastore.merge(overrides)
+              found = true
+            end
+            unless found
+              raise RhostResolveError.new(value)
             end
           end
+        rescue ::Interrupt
+          raise
         rescue StandardError => e
           results << Msf::RhostsWalker::Error.new(value, cause: e)
         end
@@ -328,14 +346,14 @@ module Msf
 
     def set_hostname(datastore, result, hostname)
       hostname = Rex::Socket.is_ip_addr?(hostname) ? nil : hostname
-      result['RHOSTNAME'] = hostname if result['RHOSTNAME'].blank?
+      result['RHOSTNAME'] = hostname if datastore['RHOSTNAME'].blank?
       result['VHOST'] = hostname if datastore.options.include?('VHOST') && datastore['VHOST'].blank?
     end
 
     def set_username(datastore, result, username)
       # Preference setting application specific values first
       username_set = false
-      option_names = %w[SMBUser FtpUser Username user USERNAME username]
+      option_names = %w[SMBUser FtpUser Username user USER USERNAME username]
       option_names.each do |option_name|
         if datastore.options.include?(option_name)
           result[option_name] = username

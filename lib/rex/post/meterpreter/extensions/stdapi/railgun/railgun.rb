@@ -93,7 +93,8 @@ class Railgun
       'psapi',
       'dbghelp',
       'winspool',
-      'spoolss'
+      'spoolss',
+      'secur32'
     ].freeze
   }.freeze
 
@@ -133,7 +134,7 @@ class Railgun
   #
   def util
     if @util.nil?
-      @util = Util.new(self, client.arch)
+      @util = Util.new(self, client.native_arch)
     end
 
     return @util
@@ -186,7 +187,7 @@ class Railgun
   # LPVOID parameters)
   #
   def memwrite(address, data, length=nil)
-
+    data = data.to_binary_s if data.is_a?(BinData::Struct)
     length = data.length if length.nil?
     raise "Invalid parameters." if(not address or not data or not length)
 

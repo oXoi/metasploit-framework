@@ -16,7 +16,12 @@ class MetasploitModule < Msf::Auxiliary
         },
         'Author' => ['Geoff Rainville noncenz[at]ultibits.com'],
         'License' => MSF_LICENSE,
-        'References' => [['URL', 'https://redis.io/topics/protocol']]
+        'References' => [['URL', 'https://redis.io/topics/protocol']],
+        'Notes' => {
+          'Stability' => [CRASH_SAFE],
+          'SideEffects' => [],
+          'Reliability' => []
+        }
       )
     )
     register_options(
@@ -104,13 +109,13 @@ class MetasploitModule < Msf::Auxiliary
       return
     end
 
-    # Ensure version compatability
+    # Ensure version compatibility
     if (Rex::Version.new(redis_version) < Rex::Version.new(MIN_REDIS_VERSION))
       print_status("Module supports Redis #{MIN_REDIS_VERSION} or higher.")
       return
     end
 
-    # Connection was sucessful
+    # Connection was successful
     return info_data
   rescue Msf::Auxiliary::Failed => e
     # This error trips when auth is required but password not set
