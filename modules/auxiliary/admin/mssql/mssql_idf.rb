@@ -14,6 +14,7 @@
 
 class MetasploitModule < Msf::Auxiliary
   include Msf::Exploit::Remote::MSSQL
+  include Msf::OptionalSession::MSSQL
 
   def initialize(info = {})
     super(update_info(info,
@@ -86,12 +87,15 @@ class MetasploitModule < Msf::Auxiliary
     sql += "DEALLOCATE table_cursor "
 
     begin
-      if mssql_login_datastore
-        result = mssql_query(sql, false)
+      if session
+        set_mssql_session(session.client)
       else
-        print_error('Login failed')
-        return
+        unless mssql_login_datastore
+          print_error('Login failed')
+          return
+        end
       end
+      result = mssql_query(sql, false)
     rescue Rex::ConnectionRefused => e
       print_error("Connection failed: #{e}")
       return
@@ -100,6 +104,12 @@ class MetasploitModule < Msf::Auxiliary
     column_data = result[:rows]
     widths = [0, 0, 0, 0, 0, 9]
     total_width = 0
+
+    if result[:errors] && !result[:errors].empty?
+      result[:errors].each do |err|
+        print_error(err)
+      end
+    end
 
     if column_data.nil?
       print_error("No columns matched the pattern #{datastore['NAMES'].inspect}. Set the NAMES option to change this search pattern.")

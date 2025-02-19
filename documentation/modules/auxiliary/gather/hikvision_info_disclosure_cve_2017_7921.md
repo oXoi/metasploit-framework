@@ -52,7 +52,7 @@ camera snapshots.
 
 ## Actions
 ### Automatic
-Retrieves all information suported by this module
+Retrieves all information supported by this module
 ### Configuration
 Retrieves the camera hardware and software configuration
 ### Credentials
@@ -82,7 +82,7 @@ Module options (auxiliary/gather/hikvision_info_disclosure_cve_2017_7921):
    ----     ---------------  --------  -----------
    PRINT    true             no        Print output to console (not applicable for snapshot)
    Proxies                   no        A proxy chain of format type:host:port[,type:host:port][...]
-   RHOSTS   192.168.100.180  yes       The target host(s), see https://github.com/rapid7/metasploit-framework/wiki/Using-Metasploit
+   RHOSTS   192.168.100.180  yes       The target host(s), see https://docs.metasploit.com/docs/using-metasploit/basics/using-metasploit.html
    RPORT    80               yes       The target port (TCP)
    SSL      false            no        Negotiate SSL/TLS for outgoing connections
    VHOST                     no        HTTP server virtual host
@@ -120,7 +120,7 @@ Device manufacturer: Hikvision.China
 Device model: DS-2CD2142FWD-IS
 Device S/N: DS-2CD2142FWD-IS2016HS77777777777
 Device MAC: bc:ad:28:ff:ff:ff
-Device firware version: V5.4.1
+Device firmware version: V5.4.1
 Device firmware release: build 160525
 Device boot version: V1.3.4
 Device boot release: 100316

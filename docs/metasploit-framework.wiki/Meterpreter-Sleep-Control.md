@@ -8,7 +8,7 @@ For these reasons, and more, the new `sleep` command in Meterpreter was created.
 
 ## Silent shells
 
-Noise during an assessment is not necessarily a good thing. With the advent of Meterpreter's new support and control of [multiple transports](https://github.com/rapid7/metasploit-framework/wiki/Meterpreter-Transport-Control), Meterpreter has the ability to change transports and therefore change the traffic pattern for communication. However, sometimes this isn't enough and sometimes users want to be able to shut the session off temporarily.
+Noise during an assessment is not necessarily a good thing. With the advent of Meterpreter's new support and control of [[multiple transports|./Meterpreter-Transport-Control.md]], Meterpreter has the ability to change transports and therefore change the traffic pattern for communication. However, sometimes this isn't enough and sometimes users want to be able to shut the session off temporarily.
 
 The `sleep` command is designed to do just that: make the current Meterpreter session go to sleep for a specified period of time, and the wake up again once that time has expired.
 
@@ -16,7 +16,7 @@ During this dormant period, no socket is active, no requests are made, and no re
 
 The interface to the sleep command looks like this:
 
-```
+```msf
 meterpreter > sleep
 Usage: sleep <time>
 
@@ -27,11 +27,11 @@ Usage: sleep <time>
   shut down and restarted after the designated timeout.
 ```
 
-As shown, `sleep` expects to be given a single postive integer value that represents the number of seconds that Meterpreter should be silent for. When run, the session will close, and then callback after the elapsed period of time. Given that Meterpreter lives in memory, this lack of communication will make it extremely difficult to track.
+As shown, `sleep` expects to be given a single positive integer value that represents the number of seconds that Meterpreter should be silent for. When run, the session will close, and then callback after the elapsed period of time. Given that Meterpreter lives in memory, this lack of communication will make it extremely difficult to track.
 
 The following shows a sample run where Meterpreter is put to sleep for 20 seconds, after which the session reconnects while the handler is still in background:
 
-```
+```msf
 meterpreter > sleep 20
 [*] Telling the target instance to sleep for 20 seconds ...
 [+] Target instance has gone to sleep, terminating current session.

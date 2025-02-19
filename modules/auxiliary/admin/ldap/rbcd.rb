@@ -6,6 +6,7 @@
 class MetasploitModule < Msf::Auxiliary
 
   include Msf::Exploit::Remote::LDAP
+  include Msf::OptionalSession::LDAP
 
   ATTRIBUTE = 'msDS-AllowedToActOnBehalfOfOtherIdentity'.freeze
 
@@ -65,14 +66,14 @@ class MetasploitModule < Msf::Auxiliary
   end
 
   def fail_with_ldap_error(message)
-    ldap_result = @ldap.as_json['result']['ldap_result']
-    return if ldap_result['resultCode'] == 0
+    ldap_result = @ldap.get_operation_result.table
+    return if ldap_result[:code] == 0
 
     print_error(message)
     # Codes taken from https://ldap.com/ldap-result-code-reference-core-ldapv3-result-codes
-    case ldap_result['resultCode']
+    case ldap_result[:code]
     when 1
-      fail_with(Failure::Unknown, "An LDAP operational error occurred. The error was: #{ldap_result['errorMessage'].strip}")
+      fail_with(Failure::Unknown, "An LDAP operational error occurred. The error was: #{ldap_result[:error_message].strip}")
     when 16
       fail_with(Failure::NotFound, 'The LDAP operation failed because the referenced attribute does not exist.')
     when 50
@@ -89,7 +90,7 @@ class MetasploitModule < Msf::Auxiliary
       fail_with(Failure::Unknown, 'The LDAP operation failed due to an object class violation.')
     end
 
-    fail_with(Failure::Unknown, "Unknown LDAP error occurred: result: #{ldap_result['resultCode']} message: #{ldap_result['errorMessage'].strip}")
+    fail_with(Failure::Unknown, "Unknown LDAP error occurred: result: #{ldap_result[:code]} message: #{ldap_result[:error_message].strip}")
   end
 
   def get_delegate_from_obj
@@ -138,7 +139,7 @@ class MetasploitModule < Msf::Auxiliary
       else
         print_status('Discovering base DN automatically')
 
-        unless (@base_dn = discover_base_dn(ldap))
+        unless (@base_dn = ldap.base_dn)
           print_warning("Couldn't discover base DN!")
         end
       end
@@ -153,8 +154,14 @@ class MetasploitModule < Msf::Auxiliary
 
       send("action_#{action.name.downcase}", obj)
     end
+  rescue Errno::ECONNRESET
+    fail_with(Failure::Disconnected, 'The connection was reset.')
+  rescue Rex::ConnectionError => e
+    fail_with(Failure::Unreachable, e.message)
+  rescue Rex::Proto::Kerberos::Model::Error::KerberosError => e
+    fail_with(Failure::NoAccess, e.message)
   rescue Net::LDAP::Error => e
-    print_error("#{e.class}: #{e.message}")
+    fail_with(Failure::Unknown, "#{e.class}: #{e.message}")
   end
 
   def action_read(obj)

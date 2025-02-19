@@ -82,19 +82,24 @@ class MetasploitModule < Msf::Auxiliary
     begin
       connect
 
-      res = smtp_send_recv("EHLO X\r\n")
+      res = raw_send_recv("EHLO X\r\n")
+      vprint_status("#{res.inspect}")
+      # check if the EHLO is actually supported. In case it's not, try the HELO command instead
+      if res.to_s =~ /^5\d\d/
+        res = raw_send_recv("HELO X\r\n")
+        vprint_status("#{res.inspect}")
+      end
+
+      res = raw_send_recv("#{mailfrom}\r\n")
       vprint_status("#{res.inspect}")
 
-      res = smtp_send_recv("#{mailfrom}\r\n")
+      res = raw_send_recv("#{mailto}\r\n")
       vprint_status("#{res.inspect}")
 
-      res = smtp_send_recv("#{mailto}\r\n")
+      res = raw_send_recv("DATA\r\n")
       vprint_status("#{res.inspect}")
 
-      res = smtp_send_recv("DATA\r\n")
-      vprint_status("#{res.inspect}")
-
-      res = smtp_send_recv("#{Rex::Text.rand_text_alpha(rand(10)+5)}\r\n.\r\n")
+      res = raw_send_recv("#{Rex::Text.rand_text_alpha(rand(10)+5)}\r\n.\r\n")
       vprint_status("#{res.inspect}")
 
       if res =~ /250/

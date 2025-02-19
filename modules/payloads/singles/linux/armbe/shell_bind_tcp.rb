@@ -9,7 +9,6 @@ module MetasploitModule
   CachedSize = 118
 
   include Msf::Payload::Single
-  include Msf::Payload::Linux
   include Msf::Sessions::CommandShellOptions
 
   def initialize(info = {})
@@ -17,7 +16,7 @@ module MetasploitModule
       'Name'          => 'Linux ARM Big Endian Command Shell, Bind TCP Inline',
       'Description'   => 'Listen for a connection and spawn a command shell',
       'Author'        => 'Balazs Bucsay @xoreipeip <balazs.bucsay[-at-]rycon[-dot-]hu>',
-      'References'    => ['URL', 'https://github.com/earthquake/shellcodes/blob/master/armeb_linux_ipv4_bind_tcp.s'],
+      'References'    => [['URL', 'https://github.com/earthquake/shellcodes/blob/master/armeb_linux_ipv4_bind_tcp.s']],
       'License'       => MSF_LICENSE,
       'Platform'      => 'linux',
       'Arch'          => ARCH_ARMBE,
