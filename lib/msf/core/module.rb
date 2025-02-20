@@ -83,6 +83,19 @@ module Msf
       # The path from which the module was loaded.
       #
       attr_accessor :file_path
+
+      # @return [String, nil] Reference name of the payload being adapted
+      attr_accessor :adapted_refname
+
+      # @return [String, nil] Reference name of the payloads adapter
+      attr_accessor :adapter_refname
+
+      # @return [String, nil] Reference name of the payload stage
+      attr_accessor :stage_refname
+
+      # @return [String, nil] Reference name of the payloads stager
+      attr_accessor :stager_refname
+
     end
 
     #
@@ -123,7 +136,7 @@ module Msf
       self.options.add_evasion_options(info['EvasionOptions'], self.class)
 
       # Create and initialize the data store for this module
-      self.datastore = ModuleDataStore.new(self)
+      self.datastore = Msf::ModuleDataStore.new(self)
 
       # Import default options into the datastore
       import_defaults
@@ -184,7 +197,7 @@ module Msf
       end
     end
 
-    # @param[Constant] One or more Ruby constants
+    # @param rb_modules [Constant] One or more Ruby constants
     # @return [void]
     def register_extensions(*rb_modules)
       datastore[REPLICANT_EXTENSION_DS_KEY] = [] unless datastore[REPLICANT_EXTENSION_DS_KEY].present?
@@ -205,6 +218,26 @@ module Msf
     #
     def file_path
       self.class.file_path
+    end
+
+    # @return [String, nil] Reference name of the payload being adapted
+    def adapted_refname
+      self.class.adapted_refname
+    end
+
+    # @return [String, nil] Reference name of the payloads adapter
+    def adapter_refname
+      self.class.adapter_refname
+    end
+
+    # @return [String, nil] Reference name of the payload stage
+    def stage_refname
+      self.class.stage_refname
+    end
+
+    # @return [String, nil] Reference name of the payloads stager
+    def stager_refname
+      self.class.stager_refname
     end
 
     #
@@ -298,6 +331,10 @@ module Msf
     #
     def self.cached?
       false
+    end
+
+    def default_options
+      self.module_info['DefaultOptions']
     end
 
     def required_cred_options
@@ -421,6 +458,8 @@ module Msf
     attr_writer   :platform, :references # :nodoc:
     attr_writer   :privileged # :nodoc:
     attr_writer   :license # :nodoc:
+
+
 
   end
 

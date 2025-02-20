@@ -136,13 +136,11 @@ class EncodedPayload
     # If the exploit needs the payload to be encoded, we need to run the list of
     # encoders in ranked precedence and try to encode with them.
     if needs_encoding
-      encoders = pinst.compatible_encoders
-
       # Make sure the encoder name from the user has the same String#encoding
       # as the framework's list of encoder names so we can compare them later.
       # This is important for when we get input from RPC.
       if reqs['Encoder']
-        reqs['Encoder'] = reqs['Encoder'].encode(framework.encoders.keys[0].encoding)
+        reqs['Encoder'] = reqs['Encoder'].encode(framework.encoders.module_refnames[0].encoding)
       end
 
       # If the caller had a preferred encoder, use this encoder only
@@ -151,6 +149,8 @@ class EncodedPayload
       elsif (reqs['Encoder'])
         wlog("#{pinst.refname}: Failed to find preferred encoder #{reqs['Encoder']}")
         raise NoEncodersSucceededError, "Failed to find preferred encoder #{reqs['Encoder']}"
+      else
+        encoders = compatible_encoders
       end
 
       encoders.each { |encname, encmod|
@@ -237,9 +237,9 @@ class EncodedPayload
 
           begin
             eout = self.encoder.encode(eout, reqs['BadChars'], nil, pinst.platform)
-          rescue EncodingError
-            wlog("#{err_start}: Encoder #{encoder.refname} failed: #{$!}", 'core', LEV_1)
-            dlog("#{err_start}: Call stack\n#{$@.join("\n")}", 'core', LEV_3)
+          rescue EncodingError => e
+            wlog("#{err_start}: Encoder #{encoder.refname} failed: #{e}", 'core', LEV_1)
+            dlog("#{err_start}: Call stack\n#{e.backtrace}", 'core', LEV_3)
             next_encoder = true
             break
 
@@ -557,6 +557,20 @@ protected
     end
 
     false
+  end
+
+  def compatible_encoders
+    arch = reqs['Arch'] || pinst.arch
+    platform = reqs['Platform'] || pinst.platform
+
+    encoders = []
+
+    framework.encoders.each_module_ranked(
+      'Arch' => arch, 'Platform' => platform) { |name, mod|
+      encoders << [ name, mod ]
+    }
+
+    encoders
   end
 end
 

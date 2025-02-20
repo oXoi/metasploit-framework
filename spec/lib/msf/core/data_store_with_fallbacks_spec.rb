@@ -195,6 +195,28 @@ RSpec.shared_examples_for 'a datastore' do
       s
     end
     it_behaves_like 'a datastore with lookup support'
+
+    context "parsing corner cases" do
+      it "should parse comma separated strings" do
+        str = "foo=bar,fizz=buzz"
+        subject.import_options_from_s(str)
+
+        expect(subject).to have_key("foo")
+        expect(subject["foo"]).to eql("bar")
+        expect(subject).to have_key("fizz")
+        expect(subject["fizz"]).to eql("buzz")
+      end
+
+      it "should parse options with nested equals" do
+        str = "COMMAND=date --date=2023-01-01 --iso-8601=ns,SESSION=1"
+        subject.import_options_from_s(str)
+
+        expect(subject).to have_key("COMMAND")
+        expect(subject["COMMAND"]).to eql("date --date=2023-01-01 --iso-8601=ns")
+        expect(subject).to have_key("SESSION")
+        expect(subject["SESSION"]).to eql("1")
+      end
+    end
   end
 
   describe '#from_file' do
@@ -650,8 +672,8 @@ RSpec.shared_examples_for 'a datastore' do
       it 'should return a Hash with correct values' do
         expected_to_h = {
           'SMBDomain' => 'WORKGROUP',
-          'SMBUser' => '',
-          'USER_ATTR' => ''
+          'SMBUser' => nil,
+          'USER_ATTR' => nil
         }
         expect(subject.to_h).to eq(expected_to_h)
       end
@@ -666,11 +688,11 @@ RSpec.shared_examples_for 'a datastore' do
         expected_to_h = {
           'NewOptionName' => 'overridden_default_new_option_name',
           'SMBDomain' => 'WORKGROUP',
-          'SMBUser' => '',
-          'USER_ATTR' => '',
+          'SMBUser' => nil,
+          'USER_ATTR' => nil,
           'foo' => 'overridden_default_foo',
           'bar' => 'default_bar_value',
-          'baz' => ''
+          'baz' => nil
         }
         expect(subject.to_h).to eq(expected_to_h)
       end
@@ -678,7 +700,7 @@ RSpec.shared_examples_for 'a datastore' do
   end
 end
 
-RSpec.describe Msf::DataStoreWithFallbacks do
+RSpec.describe Msf::DataStore do
   include_context 'datastore subjects'
 
   subject(:default_subject) do
@@ -690,11 +712,11 @@ RSpec.describe Msf::DataStoreWithFallbacks do
   it_behaves_like 'a datastore'
 end
 
-RSpec.describe Msf::ModuleDataStoreWithFallbacks do
+RSpec.describe Msf::ModuleDataStore do
   include_context 'datastore subjects'
 
   let(:framework_datastore) do
-    Msf::DataStoreWithFallbacks.new
+    Msf::DataStore.new
   end
   let(:mod) do
     framework = instance_double(Msf::Framework, datastore: framework_datastore)

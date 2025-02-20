@@ -8,9 +8,14 @@ module Msf::Payload::Stager
 
   include Msf::Payload::TransportConfig
 
+  attr_accessor :stage_arch
+  attr_accessor :stage_platform
+
   def initialize(info={})
     super
 
+    self.stage_arch = self.arch
+    self.stage_platform = self.platform
     register_advanced_options(
       [
         Msf::OptBool.new("EnableStageEncoding", [ false, "Encode the second stage payload", false ]),
@@ -183,15 +188,14 @@ module Msf::Payload::Stager
         end
       end
 
-      p = generate_stage(opts)
-
-      # Encode the stage if stage encoding is enabled
+      # Generate and encode the stage if stage encoding is enabled
       begin
+        p = generate_stage(opts)
         p = encode_stage(p)
-      rescue ::RuntimeError
+      rescue ::RuntimeError, ::StandardError => e
         warning_msg = "Failed to stage"
         warning_msg << " (#{conn.peerhost})"  if conn.respond_to? :peerhost
-        warning_msg << ": #{$!}"
+        warning_msg << ": #{e}"
         print_warning warning_msg
         if conn.respond_to? :close && !conn.closed?
           conn.close
@@ -288,7 +292,9 @@ module Msf::Payload::Stager
         'Encoder'            => stage_enc_mod,
         'EncoderOptions'     => { 'SaveRegisters' => saved_registers },
         'ForceSaveRegisters' => true,
-        'ForceEncode'        => true)
+        'ForceEncode'        => true,
+        'Arch'               => self.stage_arch,
+        'Platform'           => self.stage_platform)
 
       if encp.encoder
         if stage_enc_mod

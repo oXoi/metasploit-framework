@@ -62,15 +62,14 @@ class Payload < Msf::Module
     # If this is an adapted or staged payload but there is no stage information,
     # then this is actually a stager + single combination.  Set up the
     # information hash accordingly.
-    if (self.class.include?(Msf::Payload::Adapter) || self.class.include?(Msf::Payload::Single)) and
-      self.class.include?(Msf::Payload::Stager)
-      self.module_info['Stage'] = {}
+    if (self.class.include?(Msf::Payload::Adapter) || self.class.include?(Msf::Payload::Single)) and self.class.include?(Msf::Payload::Stager)
 
       if self.module_info['Payload']
         self.module_info['Stage']['Payload']  = self.module_info['Payload']['Payload'] || ""
         self.module_info['Stage']['Assembly'] = self.module_info['Payload']['Assembly'] || ""
         self.module_info['Stage']['Offsets']  = self.module_info['Payload']['Offsets'] || {}
-      else
+      elsif !self.module_info['Stage']
+        self.module_info['Stage'] = {}
         self.module_info['Stage']['Payload']  = ""
         self.module_info['Stage']['Assembly'] = ""
         self.module_info['Stage']['Offsets']  = {}
@@ -136,6 +135,8 @@ class Payload < Msf::Module
   #
   def payload_type_s
     case payload_type
+      when Type::Adapter
+        return "adapter"
       when Type::Stage
         return "stage"
       when Type::Stager
@@ -287,9 +288,9 @@ class Payload < Msf::Module
 
   #
   # Generates the payload and returns the raw buffer to the caller.
-  #
-  def generate(_opts = {})
-    internal_generate
+  # @param opts [Hash]
+  def generate(opts = {})
+    internal_generate(opts)
   end
 
   #
@@ -474,7 +475,7 @@ class Payload < Msf::Module
     lhost = mod.datastore['LHOST'] || Rex::Socket.source_address(mod.datastore['RHOST'] || '50.50.50.50')
 
     configure_payload = lambda do |payload|
-      if mod.datastore.is_a?(Msf::DataStoreWithFallbacks)
+      if mod.datastore.is_a?(Msf::DataStore)
         payload_defaults = { 'PAYLOAD' => payload }
 
         # Set LHOST if this is a reverse payload
@@ -524,7 +525,7 @@ class Payload < Msf::Module
   end
 
   #
-  # A placeholder stub, to be overriden by mixins
+  # A placeholder stub, to be overridden by mixins
   #
   def apply_prepends(raw)
     raw
@@ -610,9 +611,10 @@ protected
   #
   # @see PayloadSet#check_blob_cache
   # @param asm [String] Assembly code to be assembled into a raw payload
+  # @param opts [Hash]
   # @return [String] The final, assembled payload
   # @raise ArgumentError if +asm+ is blank
-  def build(asm, off={})
+  def build(asm, off={}, opts = {})
     if(asm.nil? or asm.empty?)
       raise ArgumentError, "Assembly must not be empty"
     end
@@ -643,7 +645,7 @@ protected
     end
 
     # Assemble the payload from the assembly
-    a = self.arch
+    a = opts[:arch] || self.arch
     if a.kind_of? Array
       a = self.arch.first
     end
@@ -676,11 +678,11 @@ protected
   #
   # Generate the payload using our local payload blob and offsets
   #
-  def internal_generate
+  def internal_generate(opts = {})
     # Build the payload, either by using the raw payload blob defined in the
     # module or by actually assembling it
     if assembly and !assembly.empty?
-      raw = build(assembly, offsets)
+      raw = build(assembly, offsets, opts)
     else
       raw = payload.dup
     end
