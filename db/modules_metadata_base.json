@@ -11104,7 +11104,7 @@
     "autofilter_ports": [],
     "autofilter_services": [],
     "targets": null,
-    "mod_time": "2024-01-07 15:02:53 +0000",
+    "mod_time": "2025-05-04 12:09:08 +0000",
     "path": "/modules/auxiliary/bnat/bnat_router.rb",
     "is_install_path": true,
     "ref_name": "bnat/bnat_router",
@@ -11138,7 +11138,7 @@
     "autofilter_ports": [],
     "autofilter_services": [],
     "targets": null,
-    "mod_time": "2019-03-05 03:38:51 +0000",
+    "mod_time": "2025-05-04 12:09:08 +0000",
     "path": "/modules/auxiliary/bnat/bnat_scan.rb",
     "is_install_path": true,
     "ref_name": "bnat/bnat_scan",
@@ -244098,14 +244098,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 14:12:25 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/capture/keylog_recorder.rb",
     "is_install_path": true,
     "ref_name": "windows/capture/keylog_recorder",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -244133,14 +244139,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/capture/lockout_keylogger.rb",
     "is_install_path": true,
     "ref_name": "windows/capture/lockout_keylogger",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "screen-effects"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -244165,14 +244179,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/escalate/droplnk.rb",
     "is_install_path": true,
     "ref_name": "windows/escalate/droplnk",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "artifacts-on-disk"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -244197,7 +244219,7 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/escalate/getsystem.rb",
     "is_install_path": true,
     "ref_name": "windows/escalate/getsystem",
@@ -244212,7 +244234,12 @@
         "PrintSpooler",
         "EFSRPC",
         "EfsPotato"
-      ]
+      ],
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [],
+      "Reliability": []
     },
     "session_types": [
       "meterpreter"
@@ -244240,14 +244267,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-04-12 13:09:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/escalate/golden_ticket.rb",
     "is_install_path": true,
     "ref_name": "windows/escalate/golden_ticket",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -244270,7 +244303,7 @@
       "OSVDB-68552",
       "CVE-2010-2743",
       "MSB-MS10-073",
-      "URL-http://www.reversemode.com/index.php?option=com_content&task=view&id=71&Itemid=1",
+      "URL-https://web.archive.org/web/20160308010201/http://www.reversemode.com/index.php?option=com_content&task=view&id=71&Itemid=1",
       "EDB-15985"
     ],
     "platform": "Windows",
@@ -244279,14 +244312,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-05-25 12:45:30 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/escalate/ms10_073_kbdlayout.rb",
     "is_install_path": true,
     "ref_name": "windows/escalate/ms10_073_kbdlayout",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-os-down"
+      ],
+      "SideEffects": [
+        "artifacts-on-disk"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -244305,21 +244346,31 @@
       "Metlstorm"
     ],
     "description": "This module unlocks a locked Windows desktop by patching\n          the respective code inside the LSASS.exe process. This\n          patching process can result in the target system hanging or\n          even rebooting, so be careful when using this module on\n          production systems.",
-    "references": [],
+    "references": [
+      "URL-http://www.storm.net.nz/projects/16"
+    ],
     "platform": "Windows",
     "arch": "",
     "rport": null,
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-05-25 12:45:30 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/escalate/screen_unlock.rb",
     "is_install_path": true,
     "ref_name": "windows/escalate/screen_unlock",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-os-down"
+      ],
+      "SideEffects": [
+        "screen-effects"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -244339,7 +244390,7 @@
       "Sanjay Gondaliya",
       "Pratik Shah <pratik@notsosecure.com>"
     ],
-    "description": "This module exploits a local privilege escalation bug which exists\n          in microsoft COM for windows when it fails to properly handle serialized objects.",
+    "description": "This module exploits a local privilege escalation bug which exists\n          in Microsoft COM for Windows when it fails to properly handle serialized objects.",
     "references": [
       "CVE-2018-0824",
       "URL-https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2018-0824",
@@ -244352,14 +244403,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-05-25 12:45:30 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/escalate/unmarshal_cmd_exec.rb",
     "is_install_path": true,
     "ref_name": "windows/escalate/unmarshal_cmd_exec",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "artifacts-on-disk"
+      ],
+      "Reliability": []
+    },
     "session_types": [],
     "needs_cleanup": null,
     "actions": []
@@ -246232,7 +246291,7 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2025-04-28 09:08:33 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/gather/credentials/mdaemon_cred_collector.rb",
     "is_install_path": true,
     "ref_name": "windows/gather/credentials/mdaemon_cred_collector",
@@ -251549,7 +251608,7 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2024-07-24 16:42:43 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/add_user.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/add_user",
@@ -251590,14 +251649,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/archmigrate.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/archmigrate",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-service-down"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -251622,14 +251687,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/change_password.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/change_password",
     "check": false,
     "post_auth": true,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "config-changes"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -251686,14 +251759,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/delete_user.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/delete_user",
     "check": false,
     "post_auth": true,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "service-resource-loss"
+      ],
+      "SideEffects": [
+        "config-changes"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -251770,14 +251851,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/download_exec.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/download_exec",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "artifacts-on-disk"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -251802,14 +251891,23 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/driver_loader.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/driver_loader",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-os-down"
+      ],
+      "SideEffects": [
+        "ioc-in-logs",
+        "config-changes"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -251834,14 +251932,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/enable_rdp.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/enable_rdp",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "config-changes"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -251866,14 +251972,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-05-25 12:45:30 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/enable_support_account.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/enable_support_account",
     "check": false,
     "post_auth": true,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "config-changes"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -251881,7 +251995,7 @@
     "actions": []
   },
   "post_windows/manage/exec_powershell": {
-    "name": "Windows Powershell Execution Post Module",
+    "name": "Windows PowerShell Execution Post Module",
     "fullname": "post/windows/manage/exec_powershell",
     "aliases": [],
     "rank": 300,
@@ -251891,7 +252005,7 @@
       "Nicholas Nam (nick <Nicholas Nam (nick@executionflow.org)>",
       "RageLtMan <rageltman@sempervictus>"
     ],
-    "description": "This module will execute a powershell script in a meterpreter session.\n          The user may also enter text substitutions to be made in memory before execution.\n          Setting VERBOSE to true will output both the script prior to execution and the results.",
+    "description": "This module will execute a PowerShell script in a meterpreter session.\n          The user may also enter text substitutions to be made in memory before execution.\n          Setting VERBOSE to true will output both the script prior to execution and the results.",
     "references": [],
     "platform": "Windows",
     "arch": "",
@@ -251899,14 +252013,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/exec_powershell.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/exec_powershell",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -251933,7 +252053,7 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-06-19 12:36:32 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/execute_dotnet_assembly.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/execute_dotnet_assembly",
@@ -252012,14 +252132,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/hashcarve.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/hashcarve",
     "check": false,
     "post_auth": true,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "config-changes"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -252047,14 +252175,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/ie_proxypac.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/ie_proxypac",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "service-resource-loss"
+      ],
+      "SideEffects": [
+        "config-changes"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -252079,14 +252215,23 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/inject_ca.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/inject_ca",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "ioc-in-logs",
+        "config-changes"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -252111,14 +252256,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/inject_host.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/inject_host",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "config-changes"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -252190,14 +252343,23 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/install_ssh.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/install_ssh",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "artifacts-on-disk",
+        "ioc-in-logs"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter",
       "shell"
@@ -252367,14 +252529,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/migrate.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/migrate",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-service-down"
+      ],
+      "SideEffects": [
+        "config-changes"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -252399,14 +252569,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2024-01-31 18:07:07 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/mssql_local_auth_bypass.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/mssql_local_auth_bypass",
     "check": false,
     "post_auth": true,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "config-changes"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -252424,7 +252602,7 @@
       "Carlos Perez <carlos_perez@darkoperator.com>",
       "David Kennedy \"ReL1K\" <kennedyd013@gmail.com>"
     ],
-    "description": "This module will inject in to several processes a given\n          payload and connecting to a given list of IP Addresses.\n          The module works with a given lists of IP Addresses and\n          process PIDs if no PID is given it will start a the given\n          process in the advanced options and inject the selected\n          payload in to the memory of the created module.",
+    "description": "This module will inject into several processes a given\n          payload and connect to a given list of IP addresses.\n          The module works with a given lists of IP addresses and\n          process IDs if no PID is given it will start the given\n          process in the advanced options and inject the selected\n          payload into the memory of the created module.",
     "references": [],
     "platform": "Windows",
     "arch": "",
@@ -252432,14 +252610,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/multi_meterpreter_inject.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/multi_meterpreter_inject",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-service-down"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -252464,14 +252648,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/nbd_server.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/nbd_server",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -252496,14 +252686,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2024-01-15 14:56:46 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/peinjector.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/peinjector",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-service-down"
+      ],
+      "SideEffects": [
+        "config-changes"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -252520,7 +252718,7 @@
     "author": [
       "Merlyn drforbin Cousins <drforbin6@gmail.com>"
     ],
-    "description": "This Module will upload an executable to a remote host and make it Persistent.\n          It can be installed as USER, SYSTEM, or SERVICE. USER will start on user login,\n          SYSTEM will start on system boot but requires privs. SERVICE will create a new service\n          which will start the payload. Again requires privs.",
+    "description": "This module will upload an executable to a remote host and make it Persistent.\n          It can be installed as USER, SYSTEM, or SERVICE. USER will start on user login,\n          SYSTEM will start on system boot but requires privs. SERVICE will create a new service\n          which will start the payload. Again requires privs.",
     "references": [],
     "platform": "Windows",
     "arch": "",
@@ -252528,7 +252726,7 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/persistence_exe.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/persistence_exe",
@@ -252571,14 +252769,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-05-25 12:45:30 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/portproxy.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/portproxy",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "config-changes"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -252603,14 +252809,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/powershell/build_net_code.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/powershell/build_net_code",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -252636,14 +252848,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/powershell/exec_powershell.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/powershell/exec_powershell",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -252669,14 +252887,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/powershell/load_script.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/powershell/load_script",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "powershell"
     ],
@@ -252703,14 +252927,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-05-25 12:45:30 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/pptp_tunnel.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/pptp_tunnel",
     "check": false,
     "post_auth": true,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "config-changes"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -252736,14 +252968,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/priv_migrate.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/priv_migrate",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-service-down"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -252803,14 +253041,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/reflective_dll_inject.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/reflective_dll_inject",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-service-down"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -252827,7 +253071,7 @@
     "author": [
       "vt <nick.freeman@security-assessment.com>"
     ],
-    "description": "This module allows the attacker to remove an arbitrary CA certificate\n          from the victim's Trusted Root store.",
+    "description": "This module removes the specified CA certificate from the\n          system Trusted Root store.",
     "references": [],
     "platform": "Windows",
     "arch": "",
@@ -252835,14 +253079,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/remove_ca.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/remove_ca",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "config-changes"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -252867,14 +253119,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/remove_host.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/remove_host",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "config-changes"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -252893,7 +253153,7 @@
     ],
     "description": "This module will create an entry on the target by modifying some properties\n        of an existing account. It will change the account attributes by setting a\n        Relative Identifier (RID), which should be owned by one existing\n        account on the destination machine.\n\n        Taking advantage of some Windows Local Users Management integrity issues,\n        this module will allow to authenticate with one known account\n        credentials (like GUEST account), and access with the privileges of another\n        existing account (like ADMINISTRATOR account), even if the spoofed account is\n        disabled.",
     "references": [
-      "URL-http://csl.com.co/rid-hijacking/"
+      "URL-https://web.archive.org/web/20240520163742/https://csl.com.co/rid-hijacking/"
     ],
     "platform": "Windows",
     "arch": "",
@@ -252901,7 +253161,7 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-05-25 12:45:30 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/rid_hijack.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/rid_hijack",
@@ -252926,7 +253186,7 @@
       "metasploit <metasploit@@csiete.org>",
       "luisco100 <luisco100@gmail.com>"
     ],
-    "description": "This module with appropriate rights let to use the Windows Defender command-line utility a run and automation\n          tool (mpcmdrun.exe) in order to disable all the signatures available installed for the compromised machine.\n          The tool is prominently used for scheduling scans and updating the signature or definition files,\n          but there is a switch created to restore the installed signature definitions to a previous backup copy or\n          to the original default set of signatures which is none, disabling all the signatures and allowing malware\n          to execute even with the Windows Defender solution enabled.",
+    "description": "This module with appropriate rights uses the Windows Defender command-line utility to run an automation\n          tool (mpcmdrun.exe) in order to disable all the signatures available installed for the compromised machine.\n          The tool is prominently used for scheduling scans and updating the signature or definition files,\n          but there is a switch created to restore the installed signature definitions to a previous backup copy or\n          to the original default set of signatures which is none, disabling all the signatures and allowing malware\n          to execute even with the Windows Defender solution enabled.",
     "references": [],
     "platform": "Windows",
     "arch": "",
@@ -252934,7 +253194,7 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2022-09-19 17:31:51 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/rollback_defender_signatures.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/rollback_defender_signatures",
@@ -252946,7 +253206,9 @@
         "service-resource-loss"
       ],
       "Reliability": [],
-      "SideEffects": []
+      "SideEffects": [
+        "config-changes"
+      ]
     },
     "session_types": [
       "meterpreter"
@@ -252981,14 +253243,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/rpcapd_start.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/rpcapd_start",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -253005,7 +253273,7 @@
     "author": [
       "Kx499"
     ],
-    "description": "This module will login with the specified username/password and execute the\n          supplied command as a hidden process. Output is not returned by default, by setting\n          CMDOUT to true output will be redirected to a temp file and read back in to\n          display. By setting advanced option SETPASS to true, it will reset the users\n          password and then execute the command.",
+    "description": "This module will login with the specified username/password and execute the\n          supplied command as a hidden process. Output is not returned by default, by setting\n          CMDOUT to true output will be redirected to a temp file and read back in to\n          display. By setting advanced option SETPASS to true, it will reset the user's\n          password and then execute the command.",
     "references": [],
     "platform": "Windows",
     "arch": "",
@@ -253013,14 +253281,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/run_as.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/run_as",
     "check": false,
     "post_auth": true,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -253028,7 +253302,7 @@
     "actions": []
   },
   "post_windows/manage/run_as_psh": {
-    "name": "Windows 'Run As' Using Powershell",
+    "name": "Windows 'Run As' Using PowerShell",
     "fullname": "post/windows/manage/run_as_psh",
     "aliases": [],
     "rank": 300,
@@ -253037,7 +253311,7 @@
     "author": [
       "p3nt4"
     ],
-    "description": "This module will start a process as another user using powershell.",
+    "description": "This module will start a process as another user using PowerShell.",
     "references": [],
     "platform": "Windows",
     "arch": "",
@@ -253045,14 +253319,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/run_as_psh.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/run_as_psh",
     "check": false,
     "post_auth": true,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -253077,14 +253357,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/sdel.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/sdel",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -253109,14 +253395,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/shellcode_inject.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/shellcode_inject",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-service-down"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -253141,14 +253433,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/sshkey_persistence.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/sshkey_persistence",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "artifacts-on-disk"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter",
       "shell"
@@ -253177,14 +253477,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-05-11 12:22:54 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/sticky_keys.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/sticky_keys",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "config-changes"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter",
       "shell"
@@ -253221,14 +253529,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/vmdk_mount.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/vmdk_mount",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "ioc-in-logs"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -253321,14 +253637,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-05-25 12:45:30 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/wdigest_caching.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/wdigest_caching",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "config-changes"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -253353,14 +253677,22 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/manage/webcam.rb",
     "is_install_path": true,
     "ref_name": "windows/manage/webcam",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [
+        "physical-effects"
+      ],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -253394,14 +253726,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/recon/computer_browser_discovery.rb",
     "is_install_path": true,
     "ref_name": "windows/recon/computer_browser_discovery",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -253428,14 +253766,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-05-25 12:45:30 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/recon/outbound_ports.rb",
     "is_install_path": true,
     "ref_name": "windows/recon/outbound_ports",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -253460,14 +253804,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/wlan/wlan_bss_list.rb",
     "is_install_path": true,
     "ref_name": "windows/wlan/wlan_bss_list",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -253492,14 +253842,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/wlan/wlan_current_connection.rb",
     "is_install_path": true,
     "ref_name": "windows/wlan/wlan_current_connection",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -253524,14 +253880,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/wlan/wlan_disconnect.rb",
     "is_install_path": true,
     "ref_name": "windows/wlan/wlan_disconnect",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-service-down"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -253556,14 +253918,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/wlan/wlan_probe_request.rb",
     "is_install_path": true,
     "ref_name": "windows/wlan/wlan_probe_request",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
@@ -253588,14 +253956,20 @@
     "autofilter_ports": null,
     "autofilter_services": null,
     "targets": null,
-    "mod_time": "2023-02-08 13:47:34 +0000",
+    "mod_time": "2025-05-09 10:51:17 +0000",
     "path": "/modules/post/windows/wlan/wlan_profile.rb",
     "is_install_path": true,
     "ref_name": "windows/wlan/wlan_profile",
     "check": false,
     "post_auth": false,
     "default_credential": false,
-    "notes": {},
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "SideEffects": [],
+      "Reliability": []
+    },
     "session_types": [
       "meterpreter"
     ],
