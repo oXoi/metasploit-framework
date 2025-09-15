@@ -91705,51 +91705,6 @@
     "needs_cleanup": true,
     "actions": []
   },
-  "exploit_linux/local/rc_local_persistence": {
-    "name": "rc.local Persistence",
-    "fullname": "exploit/linux/local/rc_local_persistence",
-    "aliases": [],
-    "rank": 600,
-    "disclosure_date": "1980-10-01",
-    "type": "exploit",
-    "author": [
-      "Eliott Teissonniere"
-    ],
-    "description": "This module will edit /etc/rc.local in order to persist a payload.\n          The payload will be executed on the next reboot.",
-    "references": [],
-    "platform": "Linux,Unix",
-    "arch": "cmd",
-    "rport": null,
-    "autofilter_ports": [],
-    "autofilter_services": [],
-    "targets": [
-      "Automatic"
-    ],
-    "mod_time": "2025-06-23 12:43:46 +0000",
-    "path": "/modules/exploits/linux/local/rc_local_persistence.rb",
-    "is_install_path": true,
-    "ref_name": "linux/local/rc_local_persistence",
-    "check": false,
-    "post_auth": false,
-    "default_credential": false,
-    "notes": {
-      "Reliability": [
-        "unknown-reliability"
-      ],
-      "Stability": [
-        "unknown-stability"
-      ],
-      "SideEffects": [
-        "unknown-side-effects"
-      ]
-    },
-    "session_types": [
-      "shell",
-      "meterpreter"
-    ],
-    "needs_cleanup": null,
-    "actions": []
-  },
   "exploit_linux/local/rds_atomic_free_op_null_pointer_deref_priv_esc": {
     "name": "Reliable Datagram Sockets (RDS) rds_atomic_free_op NULL pointer dereference Privilege Escalation",
     "fullname": "exploit/linux/local/rds_atomic_free_op_null_pointer_deref_priv_esc",
@@ -95982,6 +95937,61 @@
     "needs_cleanup": null,
     "actions": []
   },
+  "exploit_linux/persistence/init_openrc": {
+    "name": "Init OpenRC Persistence",
+    "fullname": "exploit/linux/persistence/init_openrc",
+    "aliases": [
+      "exploits/linux/local/service_persistence"
+    ],
+    "rank": 600,
+    "disclosure_date": "2007-04-05",
+    "type": "exploit",
+    "author": [
+      "h00die"
+    ],
+    "description": "This module will create a service on the box via OpenRC, and mark it for auto-restart.\n          We need enough access to write service files and potentially restart services.\n          Verified against alpine 3.21.2",
+    "references": [
+      "URL-https://www.digitalocean.com/community/tutorials/how-to-configure-a-linux-service-to-start-automatically-after-a-crash-or-reboot-part-1-practical-examples",
+      "ATT&CK-T1543",
+      "URL-https://wiki.alpinelinux.org/wiki/Writing_Init_Scripts",
+      "URL-https://wiki.alpinelinux.org/wiki/OpenRC",
+      "URL-https://github.com/OpenRC/openrc/blob/master/service-script-guide.md"
+    ],
+    "platform": "Linux,Unix",
+    "arch": "cmd, x86, x64, armle, aarch64, ppc, mipsle, mipsbe",
+    "rport": null,
+    "autofilter_ports": [],
+    "autofilter_services": [],
+    "targets": [
+      "Automatic"
+    ],
+    "mod_time": "2025-09-11 12:00:52 +0000",
+    "path": "/modules/exploits/linux/persistence/init_openrc.rb",
+    "is_install_path": true,
+    "ref_name": "linux/persistence/init_openrc",
+    "check": true,
+    "post_auth": false,
+    "default_credential": false,
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "Reliability": [
+        "repeatable-session",
+        "event-dependent"
+      ],
+      "SideEffects": [
+        "artifacts-on-disk",
+        "config-changes"
+      ]
+    },
+    "session_types": [
+      "shell",
+      "meterpreter"
+    ],
+    "needs_cleanup": true,
+    "actions": []
+  },
   "exploit_linux/persistence/motd": {
     "name": "update-motd.d Persistence",
     "fullname": "exploit/linux/persistence/motd",
@@ -96023,6 +96033,57 @@
       ],
       "SideEffects": [
         "artifacts-on-disk"
+      ]
+    },
+    "session_types": [
+      "shell",
+      "meterpreter"
+    ],
+    "needs_cleanup": null,
+    "actions": []
+  },
+  "exploit_linux/persistence/rc_local": {
+    "name": "rc.local Persistence",
+    "fullname": "exploit/linux/persistence/rc_local",
+    "aliases": [
+      "exploits/linux/local/rc_local_persistence"
+    ],
+    "rank": 600,
+    "disclosure_date": "1980-10-01",
+    "type": "exploit",
+    "author": [
+      "Eliott Teissonniere"
+    ],
+    "description": "This module will edit /etc/rc.local in order to persist a payload.\n          The payload will be executed on the next reboot.\n          Verified on Ubuntu 18.04.3",
+    "references": [
+      "ATT&CK-T1037.004"
+    ],
+    "platform": "Linux,Unix",
+    "arch": "cmd, x86, x64, armle, aarch64, ppc, mipsle, mipsbe",
+    "rport": null,
+    "autofilter_ports": [],
+    "autofilter_services": [],
+    "targets": [
+      "Automatic"
+    ],
+    "mod_time": "2025-09-09 14:58:09 +0000",
+    "path": "/modules/exploits/linux/persistence/rc_local.rb",
+    "is_install_path": true,
+    "ref_name": "linux/persistence/rc_local",
+    "check": true,
+    "post_auth": false,
+    "default_credential": false,
+    "notes": {
+      "Stability": [
+        "crash-safe"
+      ],
+      "Reliability": [
+        "repeatable-session",
+        "event-dependent"
+      ],
+      "SideEffects": [
+        "artifacts-on-disk",
+        "config-changes"
       ]
     },
     "session_types": [
